@@ -1,6 +1,5 @@
 package ir.dotin.dotinspringdemo.eventbus;
 
-import ir.dotin.dotinspringdemo.DestroyPrototypeBeansPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -2,15 +2,12 @@ package ir.dotin.dotinspringdemo.account;
 
 import ir.dotin.dotinspringdemo.eventbus.CardPublishedListener;
 import ir.dotin.dotinspringdemo.eventbus.CardPublisher;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Qualifier("physical")
 @Component

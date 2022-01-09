@@ -1,7 +1,5 @@
 package ir.dotin.dotinspringdemo;
 
-import com.google.common.eventbus.EventBus;
-import ir.dotin.dotinspringdemo.eventbus.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
@@ -24,8 +22,6 @@ import java.util.List;
 @Component
 public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, BeanFactoryAware , DisposableBean {
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-    SpelExpressionParser expressionParser = new SpelExpressionParser();
     private BeanFactory beanFactory;
 
     private final List<Object> prototypeBeans = new LinkedList<>();
@@ -68,14 +64,4 @@ public class DestroyPrototypeBeansPostProcessor implements BeanPostProcessor, Be
         }
     }
 
-    private Object getTargetObject(Object proxy) throws BeansException {
-        if (AopUtils.isJdkDynamicProxy(proxy)) {
-            try {
-                return ((Advised)proxy).getTargetSource().getTarget();
-            } catch (Exception e) {
-                throw new FatalBeanException("Error getting target of JDK proxy", e);
-            }
-        }
-        return proxy;
-    }
 }

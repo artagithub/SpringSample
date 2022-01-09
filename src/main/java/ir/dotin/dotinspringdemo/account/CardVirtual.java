@@ -1,7 +1,6 @@
 package ir.dotin.dotinspringdemo.account;
 
 import ir.dotin.dotinspringdemo.ExcludeBean;
-import ir.dotin.dotinspringdemo.eventbus.Subscriber;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

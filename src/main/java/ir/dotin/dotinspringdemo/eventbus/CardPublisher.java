@@ -3,9 +3,6 @@ package ir.dotin.dotinspringdemo.eventbus;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import ir.dotin.dotinspringdemo.account.Card;
-import ir.dotin.dotinspringdemo.eventbus.CardPublishedListener;
-import ir.dotin.dotinspringdemo.eventbus.Subscriber;
-import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
