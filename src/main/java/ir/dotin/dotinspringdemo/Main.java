@@ -12,7 +12,7 @@ public class Main {
         HashMap<String, Object> objectObjectHashMap = new HashMap<>();
         Account account = new Account();
         CardPhysical cardPhysical = new CardPhysical();
-        cardPhysical.setAccount(account);
+//        cardPhysical.setAccount(account);
 
 //        objectObjectHashMap.put("physical",cardPhysical);
 //        account.setCardAction(((CardActions) objectObjectHashMap.get("physical")));
