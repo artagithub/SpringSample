@@ -1,5 +1,8 @@
 package ir.dotin.dotinspringdemo.eventbus;
 
+import ir.dotin.dotinspringdemo.account.CardPhysical;
+import ir.dotin.dotinspringdemo.account.CardVirtual;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +21,7 @@ public class PostProcessorConfiguration {
 
 
     @Bean
+    @ConditionalOnBean(CardPhysical.class)
     public CardPublisher stockTradePublisher() {
         return new CardPublisher();
     }
