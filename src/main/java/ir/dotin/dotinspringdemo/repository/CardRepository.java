@@ -1,54 +1,46 @@
 package ir.dotin.dotinspringdemo.repository;
 
 import ir.dotin.dotinspringdemo.account.Card;
-import ir.dotin.dotinspringdemo.account.CustomCardMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import javax.transaction.Transactional;
+import java.util.Collection;
 
 @Repository
-public class CardRepository {
+@Transactional
+public interface CardRepository extends JpaRepository<Card, Integer>,CustomCardRepository {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    //JPQL
+    @Query(value = "SELECT c FROM Card c where c.panNumber = ?1")
+    Card findCardByCardPan(String panNumber);
+    //Native set native query true
+    @Query(value = "SELECT * FROM C_CARD c WHERE c.PAN_NUMBER = ?1",nativeQuery = true)
+    Card findCardByCardPanNative(String panNumber);
 
-    public List<Card> getAllCards(){
-        return jdbcTemplate.query("select * from c_card"
-                , new BeanPropertyRowMapper<Card>(Card.class));
-    }
+    @Query(value = "SELECT c FROM Card c where c.panNumber = :pannumber" )
+    Card findCardByCardPanNamedParam(@Param("pannumber") String pan);
 
-    public Card fetchCardByCustomerNumber(int customerNumber){
-        return jdbcTemplate.queryForObject("select * from c_card c where c.customer_number = ?"
-        ,new BeanPropertyRowMapper<>(Card.class),new Object[]{customerNumber});
-    }
+    @Query(value = "SELECT c FROM Card c where c.panNumber IN :pannumber" )
+    Card findCardByCardPanCollection(@Param("pannumber") Collection<String> pan);
 
-    public int insertCard(Card card){
-        String sql =
-        "INSERT INTO C_CARD (customer_number,\n" +
-                "    card_number,\n" +
-                "pan_number,\n" +
-                "issued_date) VALUES (?,?,?,?)" ;
-       return jdbcTemplate.update(sql,new Object[]{card.getCustomerNumber(),card.getCardNumber(),
-        card.getPanNumber(),card.getIssuedDate()});
-    }
+    @Query(value = "update Card c set c.panNumber = :pannumber" )
+    @Modifying
+    Card updatePanNumber(@Param("pannumber") String pan);
 
-    public int updateCard(Card card){
-        String sql = "UPDATE C_CARD SET card_number = ? where customer_number = ?";
-        return jdbcTemplate.update(sql,new Object[]{card.getCardNumber(),card.getCustomerNumber()});
-    }
 
-    public int deleteCardByCustomerNumber(int customerNumber){
-        String sql = "DELETE FROM C_CARD c WHERE c.customer_number = ?";
-        return jdbcTemplate.update(sql,new Object[]{customerNumber});
-    }
+    //todo: We can specify the count query
+    @Query(value = "SELECT c FROM Card c where c.panNumber = ?1",
+    countQuery = "SELECT count(c) FROM Card c where c.panNumber = ?1")
+    Page<Card> findCardByCardPanPagination(String panNumber, Pageable pageable);
 
-    public Card fetchCardByCustomerNumberCustomMapper(int customerNumber){
-        return (Card) jdbcTemplate.queryForObject("select * from c_card c where c.customer_number = ?"
-                ,new CustomCardMapper(),new Object[]{customerNumber});
-    }
-
+    //todo: the query by parameter name
+    // first type the Type of Entity here for example Card then autocompletion
+    Card findByCustomerNumberAndCardNumberIs(Integer customerNumber,String cardNumber);
 
 }
