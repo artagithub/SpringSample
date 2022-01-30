@@ -1,8 +1,6 @@
 package ir.dotin.dotinspringdemo;
 
 import ir.dotin.dotinspringdemo.account.Card;
-import ir.dotin.dotinspringdemo.account.CardPK;
-import ir.dotin.dotinspringdemo.account.User;
 import ir.dotin.dotinspringdemo.repository.CardRepository;
 import ir.dotin.dotinspringdemo.repository.UserService;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -11,14 +9,11 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.*;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.JpaSort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @ComponentScan(excludeFilters = @ComponentScan.Filter(
         type = FilterType.ANNOTATION,classes =ExcludeBean.class
