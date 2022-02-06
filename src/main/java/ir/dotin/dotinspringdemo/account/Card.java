@@ -7,13 +7,55 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+//@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Builder
 @Entity
 @Table(name = "C_CARD")
 //@IdClass(CardPK.class)
-@EntityListeners(AuditCurrentUserListener.class)
-@Data
-public class Card extends Auditable{
+//@EntityListeners(AuditCurrentUserListener.class)
+public class Card{
+
+    public Card() {
+    }
+
+    public Card(Integer customerNumber, String cardNumber, String panNumber, Date issuedDate) {
+        this.customerNumber = customerNumber;
+        this.cardNumber = cardNumber;
+        this.panNumber = panNumber;
+        this.issuedDate = issuedDate;
+    }
+
+    public Integer getCustomerNumber() {
+        return customerNumber;
+    }
+
+    public void setCustomerNumber(Integer customerNumber) {
+        this.customerNumber = customerNumber;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getPanNumber() {
+        return panNumber;
+    }
+
+    public void setPanNumber(String panNumber) {
+        this.panNumber = panNumber;
+    }
+
+    public Date getIssuedDate() {
+        return issuedDate;
+    }
+
+    public void setIssuedDate(Date issuedDate) {
+        this.issuedDate = issuedDate;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -22,6 +22,4 @@ public class User {
     private String name;
     private String family;
 
-    @OneToMany
-    private List<Card> cardList;
 }

@@ -17,7 +17,7 @@ public class AuditCurrentUserListener {
     @PrePersist
     private void beforeAnyModification(Object auditable){
 //
-        System.out.println("get current user and set to entity");
+        System.out.println("persist new entity");
         ((Auditable) auditable).setUser(new User());
 
     }

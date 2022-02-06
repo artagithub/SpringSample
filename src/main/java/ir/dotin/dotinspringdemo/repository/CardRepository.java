@@ -1,6 +1,8 @@
 package ir.dotin.dotinspringdemo.repository;
 
 import ir.dotin.dotinspringdemo.account.Card;
+import ir.dotin.dotinspringdemo.account.CardDto;
+import ir.dotin.dotinspringdemo.account.CardView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -42,5 +45,12 @@ public interface CardRepository extends JpaRepository<Card, Integer>,CustomCardR
     //todo: the query by parameter name
     // first type the Type of Entity here for example Card then autocompletion
     Card findByCustomerNumberAndCardNumberIs(Integer customerNumber,String cardNumber);
+
+    CardDto findByPanNumberEqualsAndAndCardNumberEquals(String panNumber, String cardNumber);
+
+    // find with dynamic projection class
+    <T> List<T> findAllByCardNumber(String cardNumber,Class<T> type);
+
+
 
 }

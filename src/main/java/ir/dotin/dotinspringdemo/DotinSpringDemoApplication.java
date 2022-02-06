@@ -1,6 +1,7 @@
 package ir.dotin.dotinspringdemo;
 
 import ir.dotin.dotinspringdemo.account.Card;
+import ir.dotin.dotinspringdemo.account.CardDto;
 import ir.dotin.dotinspringdemo.repository.CardRepository;
 import ir.dotin.dotinspringdemo.repository.UserService;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -101,7 +102,12 @@ public class DotinSpringDemoApplication {
 //
         cardRepository.save(Card.builder()
                 .panNumber("456sd516351").cardNumber("54613sd5185").issuedDate(new Date()).build());
-        cardRepository.findByCustomerNumberAndCardNumberIs(1,"54613sd5185");
+        cardRepository.save(Card.builder()
+                .panNumber("452326sd516351").cardNumber("54613sd5185").issuedDate(new Date()).build());
+        cardRepository.findByPanNumberEqualsAndAndCardNumberEquals("456sd516351","54613sd5185");
+        cardRepository.findAllByCardNumber("54613sd5185",CardDto.class);
+
+
 //        Optional<Card> byId = cardRepository.findById(new CardPK(45, 65));
 //        System.out.println("the card entity "+ byId.get().getCardNumber());
 //cardRepository.findAll(JpaSort.unsafe("LENGTH(panNumber)"));
