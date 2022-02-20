@@ -38,10 +38,11 @@ public class LoggingAspect {
 
     @AfterThrowing(value = "execution(* ir.dotin.dotinspringdemo.controller.*.*(..))"
             ,throwing = "exception")
-    public void logAfterThrowingExecution(JoinPoint joinPoint, Throwable exception){
+    public void logAfterThrowingExecution(JoinPoint joinPoint, Throwable exception) throws Throwable {
         if(exception instanceof CustomRestException){
             logger.error(exception.getMessage());
         }
+        throw exception;
     }
 
 

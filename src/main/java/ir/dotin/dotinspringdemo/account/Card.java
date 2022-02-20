@@ -1,10 +1,13 @@
 package ir.dotin.dotinspringdemo.account;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.swing.text.View;
 import java.util.Date;
 
 //@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
@@ -57,6 +60,7 @@ public class Card{
         this.issuedDate = issuedDate;
     }
 
+    @JsonView(Views.Public.class)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -117,10 +121,13 @@ public class Card{
 //    @OneToOne
 //    private User user;
 
+    @JsonView({Views.Public.class,Views.Create.class})
     @Column(name = "card_number")
     private String cardNumber;
+    @JsonView({Views.Public.class,Views.Create.class})
     @Column(name = "pan_number")
     private String panNumber;
+    @JsonView({Views.Public.class,Views.Create.class})
     @Column(name = "issued_date")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date issuedDate;

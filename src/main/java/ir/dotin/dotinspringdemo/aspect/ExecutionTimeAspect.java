@@ -27,6 +27,7 @@ public class ExecutionTimeAspect {
             if(e instanceof CustomRestException){
                 logger.error(e.getMessage());
             }
+            throw e;
         }
 
         long executionTime = System.currentTimeMillis() - startTime;
@@ -49,6 +50,7 @@ public class ExecutionTimeAspect {
             if(e instanceof CustomRestException){
                 logger.error(e.getMessage());
             }
+            throw e;
         }
 
         long executionTime = System.currentTimeMillis() - startTime;

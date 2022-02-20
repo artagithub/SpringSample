@@ -51,6 +51,8 @@ public interface CardRepository extends JpaRepository<Card, Integer>,CustomCardR
     // find with dynamic projection class
     <T> List<T> findAllByCardNumber(String cardNumber,Class<T> type);
 
+    Card findByCustomerNumber(Integer customerNumber);
+
 
 
 }
