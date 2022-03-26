@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,6 +19,10 @@ public class CardService {
 
     @Autowired
     CardRepository cardRepository;
+
+    public Card findCard(Integer cardId){
+        return cardRepository.findByCustomerNumber(cardId);
+    }
 
 
     public Card patchCard(Card byCustomerNumber , Map<String,Object> props){
@@ -40,6 +46,11 @@ public class CardService {
 
         cardRepository.delete(byCustomerNumber);
 
+    }
+
+    public Card addCard(Card card){
+        card.setIssuedDate(new Date());
+        return cardRepository.save(card);
     }
 
 }

@@ -21,6 +21,7 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/card")
 public class CardController {
+
 
 
     @Autowired
@@ -57,7 +59,7 @@ public class CardController {
     }
 
     @RequestMapping(path = "/insert-card",consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<Card> insertCard(@RequestBody Card card) throws CustomRestException {
+    public ResponseEntity<Card> insertCard(@Valid @RequestBody Card card) throws CustomRestException {
 //        throw new CustomRestException("Cant persist card");
         return ResponseEntity.ok(cardRepository.save(card));
     }
@@ -116,6 +118,15 @@ public class CardController {
 //    public void handleCardNotFound(){
 //        System.out.println("Card not found");
 //    }
+
+
+    public Card findCard(Integer cardId){
+        return cardService.findCard(cardId);
+    }
+
+    public Integer calculateCardFee(Integer cardPrintFee,Integer cardProduceFee){
+        return cardPrintFee * cardProduceFee;
+    }
 
 
 

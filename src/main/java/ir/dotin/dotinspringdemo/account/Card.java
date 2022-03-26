@@ -3,11 +3,17 @@ package ir.dotin.dotinspringdemo.account;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import ir.dotin.dotinspringdemo.validation.PanNumberValid;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.swing.text.View;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 //@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
@@ -123,13 +129,16 @@ public class Card{
 
     @JsonView({Views.Public.class,Views.Create.class})
     @Column(name = "card_number")
+    @NotNull(message = "Card Number must not be null")
     private String cardNumber;
     @JsonView({Views.Public.class,Views.Create.class})
     @Column(name = "pan_number")
+    @PanNumberValid(message = "Pan number is not valid")
     private String panNumber;
     @JsonView({Views.Public.class,Views.Create.class})
     @Column(name = "issued_date")
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date issuedDate;
 
 
@@ -142,5 +151,8 @@ public class Card{
 //    public void preUpdate(){
 ////        load current user and set to card
 //    }
+
+
+
 
 }

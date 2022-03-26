@@ -7,13 +7,28 @@ import ir.dotin.dotinspringdemo.repository.UserService;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @ComponentScan(excludeFilters = @ComponentScan.Filter(
@@ -21,13 +36,59 @@ import java.util.Date;
 ))
 //@Configuration
 @SpringBootApplication
-public class DotinSpringDemoApplication {
+@EnableWebMvc
+@ServletComponentScan
+public class DotinSpringDemoApplication implements WebMvcConfigurer {
 
+
+
+
+
+    @Bean
+    public ResourceBundleMessageSource messageSource(){
+        ResourceBundleMessageSource reloadableResourceBundleMessageSource
+                = new ResourceBundleMessageSource();
+        reloadableResourceBundleMessageSource.setBasename("classpath:messages");
+        reloadableResourceBundleMessageSource.setDefaultEncoding("UTF-8");
+        return reloadableResourceBundleMessageSource;
+    }
+
+    @Bean
+    public ViewResolver internalResourceViewResolver() {
+        InternalResourceViewResolver bean = new InternalResourceViewResolver();
+        bean.setViewClass(JstlView.class);
+        bean.setPrefix("/WEB-INF/templates/");
+        bean.setSuffix(".jsp");
+        return bean;
+    }
+
+
+//    @Bean
+//    @Description("Thymeleaf Template Resolver")
+//    public ServletContextTemplateResolver templateResolver() {
+//        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
+//        templateResolver.setPrefix("/WEB-INF/views/");
+//        templateResolver.setSuffix(".html");
+//        templateResolver.setTemplateMode("HTML5");
+//
+//        return templateResolver;
+//    }
+//
+//    @Bean
+//    @Description("Thymeleaf Template Engine")
+//    public SpringTemplateEngine templateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(templateResolver());
+//        templateEngine.setTemplateEngineMessageSource(messageSource());
+//        return templateEngine;
+//    }
 
 //    @Bean
 //    public CardActions cardAction(){
 //        return new CardPhysical();
 //    }
+
+
 
     @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor(){
